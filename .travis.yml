@@ -1,0 +1,8 @@
+install:
+  - nuget restore ./Source/Graphical.sln
+  - nuget install NUnit.ConsoleRunner -Version 3.6.0 -OutputDirectory nunit-runner
+language: csharp
+script:
+  - xbuild /p:Configuration=Release ./Source/Graphical.sln
+  - mono ./nunit-runner/NUnit.ConsoleRunner.*/tools/nunit3-console.exe  ./Source/Graphical.UnitTests/bin/Release/Graphical.UnitTests.dll
+solution: ./Source/Graphical.sln

@@ -96,10 +96,10 @@ task Pack -description "Packs Graphical as a nuget package." {
 task PackWithPrerequisites -description "Packs Graphical as a nuget package.  Runs prerequisites first." -depends CleanAll, RestorePackages, BuildDebug, BuildRelease, Pack
 
 task Push -description "Pushes Graphical to nuget.org." {
-    $packages = Get-ChildItem $packageDirectory\Graphical.*.nupkg
+    $packages = Get-ChildItem $packageDirectory\Graphical.*.nupkg | ? { $_.Name -notlike "*symbols*" }
     foreach ($package in $packages)
     {
-        exec { & $nugetExe push $package.FullName }
+        exec { & $nugetExe push $package.FullName -Source https://api.nuget.org/v3/index.json }
     }
 }
 

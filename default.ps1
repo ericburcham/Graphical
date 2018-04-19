@@ -2,7 +2,7 @@
 $msbuildExe = Get-Item "C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
 $nugetExe = Get-Item ".\Source\.nuget\NuGet.exe"
 $packageDirectory = ".\Packages"
-$reflectionsProject = ".\Source\Graphical\Graphical.csproj"
+$graphicalProject = ".\Source\Graphical\Graphical.csproj"
 $solutionFile = ".\Source\Graphical.sln"
 
 
@@ -90,7 +90,7 @@ task CleanAll -description "Runs 'git clean -xdf.'  Prompts first if untracked f
 task Pack -description "Packs Graphical as a nuget package." {
     Delete-Directory $packageDirectory
     Create-Directory $packageDirectory
-    exec { & $nugetExe pack $reflectionsProject -OutputDirectory $packageDirectory -Prop Configuration=Release -Symbols }
+    exec { & $nugetExe pack $graphicalProject -OutputDirectory $packageDirectory -Prop Configuration=Release -Symbols }
 }
 
 task PackWithPrerequisites -description "Packs Graphical as a nuget package.  Runs prerequisites first." -depends CleanAll, RestorePackages, BuildDebug, BuildRelease, Pack
